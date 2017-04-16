@@ -1,0 +1,52 @@
+  #include<reg51.h>			 
+  #define uint unsigned int 
+  #define uchar unsigned char	
+  uint code math[16]=
+  {0x77,0x7b,0x7d,0x7e,0xb7,0xbb,0xbd,0xbe,0xd7,0xdb,0xdd,0xde,0xe7,0xeb,0xed,0xee};
+  uint code math2[16]=
+  {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c,0x39,0x5e,0x79,0x71};
+void delay(uint t)
+  {
+  uchar j;						   
+  	 while(t--)
+	 {
+	 for(j=125;j>0;j--)
+	{;} 													  
+	 }
+  }
+uchar keyscan()
+ {
+uchar cord_h=0;
+uchar cord_l=0;
+P1=0xf0;
+if(P1!=0xf0)
+{
+delay(10);
+if(P1!=0xf0)
+ {
+ cord_h=P1;
+ P1=0X0f;
+ cord_l=P1;
+ return(cord_h|cord_l);
+  }
+ }
+ return(0xff);
+}
+void led()
+{
+   uint i;
+   uchar j=keyscan();
+   for(i=0;i<16;i++)
+ {
+ if(j==math[i])
+ P0=math2[i]; 
+ }
+}
+void main()
+  {	
+  P0=0xc0;
+while(1)
+	{
+led();
+	}
+  }
