@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+#define	uchar	unsigned	char
+#define	文件目录自己改 "C:\\Documents and Settings\\palezero\\Desktop\\12864output.txt"
+#define	aaa 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+#define	bbb { aaa,aaa,aaa,aaa,aaa,aaa,aaa,aaa}, 
+#define	ccc bbb bbb bbb bbb bbb bbb bbb bbb
+#define	ddd	ccc ccc ccc ccc ccc ccc ccc ccc
+#define	xxx  aaa,aaa,aaa,aaa,aaa,aaa,aaa,aaa
+#define	yyy xxx,xxx,xxx,xxx,xxx,xxx,xxx,xxx
+#define	uint	unsigned	int
+#define	ulong	unsigned	long
+void main()
+{
+	FILE *fp = fopen(文件目录自己改 , "wb");
+	uchar i = 0, j = 0, tempx = 0, tempy = 0, tempxx=0, tempxy = 0, tempxxx = 0;
+	uint point = 1, x, y, count = 0;
+	uchar	a[64][128] = { ddd };
+	uchar	cache_x[1024] = { 0 };
+	uchar	cache_y[1024] = { 0 };
+	uchar	s[1024] = { yyy };
+
+	while (1) {
+	A:
+			system("cls");
+			for (i = 0; i < 64; i++)
+			{
+				for (j = 0; j < 128; j++)
+					printf("%c", a[i][j]);
+				printf("\n");
+			}
+			puts("输入你想要显示的点的坐标（x=1~64,y=1~128）,输入错误结束输入,输入10000+步数清除对应步数指令,");
+			puts("例如：输入10001则清除第一步操作，输入65~9999结束输入并保存当前取模");
+			printf("这是你输入的第%d个点", point);
+			printf("x=");
+			scanf("%d", &x);
+			if (x > 64 && x <= 10000)
+			{
+				break;
+			}
+			else if (x > 10000)
+			{
+				a[cache_x[x - 10000]][cache_y[x - 10000]] = 0x00;
+				goto A;
+			}
+			printf("y=");
+			scanf("%d", &y);
+			if (y > 128 && y <= 10000)
+			{
+				break;
+			}
+			else if (y > 10000)
+			{
+				a[cache_x[y - 10000]][cache_y[y - 10000]] = 0x00;
+				goto A;
+			}
+			printf("\n");
+			a[x - 1][y - 1] = 0x30;
+			cache_x[point] = x - 1;
+			cache_y[point] = y - 1;
+			point++;
+		}
+	for (tempx = 0; tempx < 64; tempx++)
+	{
+		for (tempy = 0; tempy < 128; tempy++)
+		{
+			tempxx = (tempy + 1) % 8;
+			tempxy = (tempy + 1) / 8;
+			if (a[tempx][tempy] == 0x30)
+			{
+				switch (tempxx)
+				{
+				case 1:tempxxx += 0x80; break;
+				case 2:tempxxx += 0x40; break;
+				case 3:tempxxx += 0x20; break;
+				case 4:tempxxx += 0x10; break;
+				case 5:tempxxx += 0x08; break;
+				case 6:tempxxx += 0x04; break;
+				case 7:tempxxx += 0x02; break;
+				case 0:tempxxx += 0x01; break;
+				}
+			}
+			if (tempxx == 0)
+			{
+				s[16 * tempx + tempxy-1] = tempxxx;
+				tempxxx = 0;
+			}
+		}
+	}
+	for (count = 0; count < 1024; count++)
+	{
+		printf("%#x,", s[count]);
+		if ((count + 1) % 16 == 0)
+			printf("\n");
+	}
+	for (count = 0; count < 1024; count++)
+			{
+				fprintf(fp, "%#x,", s[count]);
+				if ((count + 1) % 16 == 0)
+				{
+					fprintf(fp, "%c",0x0d);
+					fprintf(fp, "%c", 0x0a);
+				}
+			}
+			fclose(fp);
+			puts("\n");
+			printf("12864已经取模，文件已保存至%s，\n需要时请在您指定的目录打开文件\n",文件目录自己改);
+			puts("\n/************\n\n12864取模软件ver1.00\nDeveloped by palezero\ncoded by Microsoft Visual Studio 2017\n2017.8.5\n禁止用于商业用途\n\n\t\t\t************/");
+		} 
