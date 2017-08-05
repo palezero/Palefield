@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<math.h>
 #include<stdlib.h>
+#include<windows.h>
 #define	uchar	unsigned	char
 #define	文件目录自己改 "C:\\Documents and Settings\\palezero\\Desktop\\12864output.txt"
 #define	aaa 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
@@ -106,5 +107,5 @@ void main()
 			fclose(fp);
 			puts("\n");
 			printf("12864已经取模，文件已保存至%s，\n需要时请在您指定的目录打开文件\n",文件目录自己改);
-			puts("\n/************\n\n12864取模软件ver1.00\nDeveloped by palezero\ncoded by Microsoft Visual Studio 2017\n2017.8.5\n禁止用于商业用途\n\n\t\t\t************/");
+			puts("\n/************\n\n12864取模软件ver1.00\nDeveloped by palezero\ncoded by Microsoft Visual Studio 2017\n2017.8.5\n禁止用于商业用途\ngithub.com/palezero/Palefield/blob/C51/12864imageget\n\n\t\t\t\t\t************/");
 		} 
