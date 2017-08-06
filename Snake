@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<windows.h>
+#include<stdlib.h>
+#include<conio.h>
+#include<stdbool.h>
+int a,b,i,j,x,y,level;
+void map();
+void snake(int*,int*);
+void main()
+{
+    puts("按p键开始游戏，q键退出游戏");
+    puts("请输入游戏难度(1-10)");
+    scanf("%d",&level);
+    printf("您输入的游戏难度为%d\n",level);
+    char s;
+    scanf("%c",&s);
+    if(s=='p')
+   {
+       while(1)
+    {
+        Sleep(level*1000);
+        system("cls");
+        map();
+        if(_getch()!='q')
+            break;
+    }
+}
+
+}
+void map()
+{
+puts("请输入你想设定的地图范围:axb,(ps:输入的值必须大于10×10)");
+puts("行数a=");
+scanf("%d",&a);
+puts("列数b=");
+scanf("%d",&b);
+
+char p[a][b];
+for(i=0;i<a;i++)
+{
+for(j=0;j<b;j++)
+  {if(i==0||i==(a-1))
+  p[i][j]='-';
+  else
+    p[i][j]=' ';
+    }
+   if(i==0||i==(a-1))
+   p[i][0]=p[i][b-1]=' ';
+    else
+  p[i][0]=p[i][b-1]='|';
+}
+x=1+rand()%(a-2);
+y=1+rand()%(b-2);
+snake(&x,&y);
+p[x][y]='o';
+
+for(int a1=0;a1<a;a1++)
+ {
+     for(int a2=0;a2<b;a2++)
+{
+    printf("%c",p[a1][a2]);
+    }
+printf("\n");}
+}
+
+void snake(int *x,int *y)
+{
+switch(_getch())
+{
+    case 'w':(*x)--;
+    case 's':(*x)++;
+    case 'a':(*y)--;
+    case 'd':(*y)++;
+}
+}
+
+
